@@ -99,25 +99,29 @@
     ]
   },
   "dependencies": {
-    "@raycast/api": "^1.87.0",
-    "@raycast/utils": "^1.19.0",
-    "fuse.js": "^7.0.0",
+    "@raycast/api": "^1.103.5",
+    "@raycast/utils": "^2.2.2",
+    "fuse.js": "^7.1.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {
-    "@raycast/eslint-config": "^1.0.11",
+    "@raycast/eslint-config": "^2.1.1",
     "@types/node": "22.13.10",
     "@types/react": "19.0.10",
-    "@vitest/ui": "^4.0.5",
-    "prettier": "^3.4.2",
+    "@vitest/ui": "^4.0.6",
+    "eslint": "^9.39.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.6.2",
     "typescript": "5.4.5",
-    "vitest": "^4.0.5"
+    "vitest": "^4.0.6"
   },
   "scripts": {
     "build": "ray build --skip-types -e dist -o dist",
     "dev": "ray develop",
-    "fix-lint": "ray lint --fix",
-    "lint": "tsc --noEmit && ray lint",
+    "fix-lint": "ray lint --fix && eslint --config eslint.config.strict.mjs --fix \"src/**/*.{ts,tsx}\"",
+    "lint": "tsc --noEmit && ray lint && eslint --config eslint.config.strict.mjs \"src/**/*.{ts,tsx}\"",
+    "lint:raycast": "ray lint",
+    "lint:strict": "eslint --config eslint.config.strict.mjs \"src/**/*.{ts,tsx}\"",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
