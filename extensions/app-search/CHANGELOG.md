@@ -1,6 +1,6 @@
 # App Search Changelog
 
-## [Initial Release] - 2025-11-02
+## [Initial Release] - {PR_MERGE_DATE}
 
 ### Core Features
 
