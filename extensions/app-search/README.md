@@ -1,6 +1,11 @@
-# App Search
+<p align="center">
+  <img src="./assets/icon.png" height="128">
+  <h1 align="center">App Search</h1>
+</p>
 
 Find and launch installed applications using AI-powered natural language search.
+
+![screenshot_search-apps-01-ai-coding](./metadata/search-apps-01-ai-coding.png)
 
 ## Features
 
@@ -54,18 +59,6 @@ npm run lint   # Check code quality
 ```
 
 For adding new languages, see [i18n Guide](docs/i18n.md).
-
-## Contributing
-
-This extension is **ready for Raycast Store submission**! ✓
-
-All requirements have been met:
-- ✓ Code quality (40 tests passing, 0 lint errors)
-- ✓ Screenshots (3 high-quality images in `metadata/` folder)
-- ✓ Documentation (comprehensive README and CHANGELOG)
-- ✓ Compliance with all Raycast Store guidelines
-
-To submit: `npm run publish`
 
 ## License
 
