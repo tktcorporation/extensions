@@ -69,7 +69,7 @@ export function checkPrefixMatch(target: string, query: string): MatchScore | nu
       return { score: Math.round(score), reason: "prefix" as const };
     })
     .with({ targetWords: P.when((words) => words.some((w) => w.startsWith(query))) }, ({ targetWords, query }) => {
-      const matchingWord = targetWords.find((w) => w.startsWith(query))!;
+      const matchingWord = targetWords.find((w) => w.startsWith(query)) ?? query;
       const matchRatio = query.length / matchingWord.length;
       const score = 75 + matchRatio * 10; // 75-85 range
       return { score: Math.round(score), reason: "prefix" as const };

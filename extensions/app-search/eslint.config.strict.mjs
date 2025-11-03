@@ -19,7 +19,7 @@ export default defineConfig([
         },
       ],
       "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-non-null-assertion": "warn",
+      "@typescript-eslint/no-non-null-assertion": "error",
 
       // Complexity rules - enforce maintainable code
       complexity: ["warn", 15],
