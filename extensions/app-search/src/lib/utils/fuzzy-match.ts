@@ -3,6 +3,7 @@
  */
 
 import { Application } from "@raycast/api";
+import { match } from "ts-pattern";
 import { AppSearchResult, MatchScore } from "../../types";
 import {
   checkExactMatch,
@@ -64,11 +65,7 @@ export function calculateMatchScore(target: string, query: string): MatchScore {
 /**
  * Fuzzy match applications against a query
  */
-export function fuzzyMatch(
-  apps: Pick<Application, "name" | "bundleId">[],
-  query: string,
-  minScore: number = 35,
-): AppSearchResult[] {
+export function fuzzyMatch(apps: Application[], query: string, minScore: number = 35): AppSearchResult[] {
   if (!query) {
     return [];
   }
@@ -88,17 +85,21 @@ export function fuzzyMatch(
     const bestScore = nameMatch.score > bundleIdMatch.score ? nameMatch : bundleIdMatch;
 
     if (bestScore.score >= minScore) {
+      const isBundleIdMatch = bestScore === bundleIdMatch && bundleIdMatch.score > 0;
+
       results.push({
-        app: app as Application,
+        app: app,
         matchScore: bestScore.score,
-        matchReason:
-          bestScore.reason === "exact"
-            ? "Exact match"
-            : bestScore.reason === "prefix"
-              ? "Prefix match"
-              : bestScore.reason === "bundleId"
-                ? "Bundle ID match"
-                : "Contains match",
+        matchReason: isBundleIdMatch
+          ? "Bundle ID match"
+          : match(bestScore.reason)
+              .with("exact", () => "Exact match")
+              .with("prefix", () => "Prefix match")
+              .with("contains", () => "Contains match")
+              .with("bundleId", () => "Bundle ID match")
+              .with("category", () => "Category match")
+              .with("purpose", () => "Purpose match")
+              .exhaustive(),
       });
     }
   }

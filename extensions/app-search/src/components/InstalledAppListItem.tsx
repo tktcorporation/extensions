@@ -20,7 +20,7 @@ export function InstalledAppListItem({ result }: InstalledAppListItemProps) {
       subtitle={result.matchReason}
       accessories={[
         { text: `${result.matchScore}%`, tooltip: t.matchScoreTooltip },
-        result.app.bundleId ? { text: result.app.bundleId, tooltip: t.bundleIdTooltip } : {},
+        ...(result.app.bundleId ? [{ text: result.app.bundleId, tooltip: t.bundleIdTooltip }] : []),
       ]}
       icon={{ fileIcon: result.app.path }}
       actions={

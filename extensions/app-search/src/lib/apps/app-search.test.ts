@@ -10,12 +10,12 @@ import { findMatchingCategories, getCommonAppsForQuery } from "../data/app-datab
 
 describe("app search logic", () => {
   const mockApps = [
-    { name: "Google Chrome", bundleId: "com.google.Chrome" },
-    { name: "Safari", bundleId: "com.apple.Safari" },
-    { name: "Firefox", bundleId: "org.mozilla.firefox" },
-    { name: "Visual Studio Code", bundleId: "com.microsoft.VSCode" },
-    { name: "Mail", bundleId: "com.apple.mail" },
-    { name: "Xcode", bundleId: "com.apple.dt.Xcode" },
+    { name: "Google Chrome", bundleId: "com.google.Chrome", path: "/Applications/Google Chrome.app" },
+    { name: "Safari", bundleId: "com.apple.Safari", path: "/Applications/Safari.app" },
+    { name: "Firefox", bundleId: "org.mozilla.firefox", path: "/Applications/Firefox.app" },
+    { name: "Visual Studio Code", bundleId: "com.microsoft.VSCode", path: "/Applications/Visual Studio Code.app" },
+    { name: "Mail", bundleId: "com.apple.mail", path: "/System/Applications/Mail.app" },
+    { name: "Xcode", bundleId: "com.apple.dt.Xcode", path: "/Applications/Xcode.app" },
   ];
 
   describe("fuzzy matching integration", () => {

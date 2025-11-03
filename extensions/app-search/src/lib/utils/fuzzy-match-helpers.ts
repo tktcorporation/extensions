@@ -68,15 +68,12 @@ export function checkPrefixMatch(target: string, query: string): MatchScore | nu
       const score = 85 + matchRatio * 10; // 85-95 range
       return { score: Math.round(score), reason: "prefix" as const };
     })
-    .with(
-      { targetWords: P.when((words) => words.some((w) => w.startsWith(query))) },
-      ({ targetWords, query }) => {
-        const matchingWord = targetWords.find((w) => w.startsWith(query))!;
-        const matchRatio = query.length / matchingWord.length;
-        const score = 75 + matchRatio * 10; // 75-85 range
-        return { score: Math.round(score), reason: "prefix" as const };
-      },
-    )
+    .with({ targetWords: P.when((words) => words.some((w) => w.startsWith(query))) }, ({ targetWords, query }) => {
+      const matchingWord = targetWords.find((w) => w.startsWith(query))!;
+      const matchRatio = query.length / matchingWord.length;
+      const score = 75 + matchRatio * 10; // 75-85 range
+      return { score: Math.round(score), reason: "prefix" as const };
+    })
     .otherwise(() => null);
 }
 
@@ -88,10 +85,13 @@ export function checkContainsMatch(target: string, query: string): MatchScore | 
     .with({ target: P.when((t) => t.includes(query)) }, ({ target, query }) => {
       const matchRatio = query.length / target.length;
       return match(matchRatio)
-        .with(P.when((r) => r > 0.3), (ratio) => {
-          const score = 55 + ratio * 15; // 55-70 range
-          return { score: Math.round(score), reason: "contains" as const };
-        })
+        .with(
+          P.when((r) => r > 0.3),
+          (ratio) => {
+            const score = 55 + ratio * 15; // 55-70 range
+            return { score: Math.round(score), reason: "contains" as const };
+          },
+        )
         .otherwise((ratio) => {
           const score = 40 + ratio * 15; // 40-55 range
           return { score: Math.round(score), reason: "contains" as const };

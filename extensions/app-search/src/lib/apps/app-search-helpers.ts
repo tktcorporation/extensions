@@ -71,15 +71,14 @@ export function boostAISuggestedApps(results: AppSearchResult[], suggestedAppNam
     const isAISuggested = suggestedAppNames.some((name) => isFlexibleNameMatch(result.app.name, name));
 
     return match({ isAISuggested, matchScore: result.matchScore })
-      .with(
-        { isAISuggested: true, matchScore: P.when((score) => score < 95) },
-        () => ({
-          ...result,
-          matchScore: Math.min(result.matchScore + 15, 98),
-          matchReason: "AI recommended" as const,
-        }),
-      )
-      .otherwise(() => result);
+      .with({ isAISuggested: true, matchScore: P.when((score) => score < 95) }, () => ({
+        ...result,
+        matchScore: Math.min(result.matchScore + 15, 98),
+        matchReason: "AI recommended" as const,
+      }))
+      .with({ isAISuggested: true }, () => result)
+      .with({ isAISuggested: false }, () => result)
+      .exhaustive();
   });
 }
 
@@ -103,7 +102,9 @@ export function addMissingAISuggestedApps(
           matchReason: "AI recommended" as const,
         },
       ])
-      .otherwise(() => []);
+      .with({ alreadyIncluded: true }, () => [])
+      .with({ matchedApp: P.nullish }, () => [])
+      .exhaustive();
   });
 
   return [...results, ...newResults];
@@ -117,15 +118,14 @@ export function boostCategoryMatches(results: AppSearchResult[], commonAppNames:
     const isInCategory = commonAppNames.some((appName) => isFlexibleNameMatch(result.app.name, appName));
 
     return match({ isInCategory, matchScore: result.matchScore })
-      .with(
-        { isInCategory: true, matchScore: P.when((score) => score < 90) },
-        () => ({
-          ...result,
-          matchScore: Math.min(result.matchScore + 10, 95),
-          matchReason: "Category match" as const,
-        }),
-      )
-      .otherwise(() => result);
+      .with({ isInCategory: true, matchScore: P.when((score) => score < 90) }, () => ({
+        ...result,
+        matchScore: Math.min(result.matchScore + 10, 95),
+        matchReason: "Category match" as const,
+      }))
+      .with({ isInCategory: true }, () => result)
+      .with({ isInCategory: false }, () => result)
+      .exhaustive();
   });
 }
 
@@ -149,7 +149,10 @@ export function addMissingCategoryMatches(
           matchReason: "Category match" as const,
         },
       ])
-      .otherwise(() => []);
+      .with({ alreadyIncluded: false, isInCategory: false }, () => [])
+      .with({ alreadyIncluded: true, isInCategory: true }, () => [])
+      .with({ alreadyIncluded: true, isInCategory: false }, () => [])
+      .exhaustive();
   });
 
   return [...results, ...newResults];
@@ -166,12 +169,13 @@ export function applyCategoryMatching(
 ): AppSearchResult[] {
   return match(matchedCategories)
     .with([], () => results)
-    .otherwise(() => {
+    .with(P.array(), () => {
       const commonAppNames = getCommonAppsForQuery(query);
       const boosted = boostCategoryMatches(results, commonAppNames);
       const withMissing = addMissingCategoryMatches(boosted, apps, commonAppNames);
 
       // Sort by score
       return withMissing.sort((a, b) => b.matchScore - a.matchScore);
-    });
+    })
+    .exhaustive();
 }

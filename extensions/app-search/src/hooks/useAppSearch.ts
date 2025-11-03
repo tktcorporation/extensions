@@ -3,7 +3,7 @@
  */
 
 import { useState, useEffect, useRef } from "react";
-import { showToast, Toast } from "@raycast/api";
+import { showFailureToast } from "@raycast/utils";
 import { searchApps } from "../lib/apps/app-search";
 import { SearchResults } from "../types";
 
@@ -49,11 +49,8 @@ export function useAppSearch({ searchText, forceAI }: UseAppSearchOptions): UseA
         // Only show error if this is still the latest search
         if (currentSearchId === searchIdRef.current) {
           console.error("Search error:", error);
-          const errorMessage = error instanceof Error ? error.message : String(error);
-          await showToast({
-            style: Toast.Style.Failure,
+          await showFailureToast(error, {
             title: "Search failed",
-            message: errorMessage,
           });
         }
       } finally {
