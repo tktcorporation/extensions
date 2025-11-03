@@ -9,12 +9,11 @@ import { useAppSearch } from "./hooks/useAppSearch";
 import { InstalledAppListItem } from "./components/InstalledAppListItem";
 import { AskAIListItem } from "./components/AskAIListItem";
 import { SuggestionListItem } from "./components/SuggestionListItem";
-import { useTranslations } from "./lib/i18n";
+import { strings } from "./lib/strings";
 
 export default function SearchAppCommand() {
   const [searchText, setSearchText] = useState("");
   const [forceAI, setForceAI] = useState(false);
-  const t = useTranslations();
 
   const { results, isLoading, showAskAI } = useAppSearch({ searchText, forceAI });
 
@@ -30,22 +29,22 @@ export default function SearchAppCommand() {
     <List
       isLoading={isLoading}
       onSearchTextChange={setSearchText}
-      searchBarPlaceholder={t.searchBarPlaceholder}
+      searchBarPlaceholder={strings.searchBarPlaceholder}
       throttle
     >
       {showEmptyView ? (
         <List.EmptyView
           icon={Icon.MagnifyingGlass}
-          title={t.emptyViewTitle}
-          description={t.emptyViewDescription(searchText)}
+          title={strings.emptyViewTitle}
+          description={strings.emptyViewDescription(searchText)}
         />
       ) : (
         <>
           {/* Installed Applications Section */}
           {results.installed.length > 0 && (
             <List.Section
-              title={t.installedSectionTitle(results.installed.length)}
-              subtitle={t.installedSectionSubtitle}
+              title={strings.installedSectionTitle(results.installed.length)}
+              subtitle={strings.installedSectionSubtitle}
             >
               {results.installed.map((result) => (
                 <InstalledAppListItem key={result.app.bundleId || result.app.path} result={result} />
@@ -55,7 +54,7 @@ export default function SearchAppCommand() {
 
           {/* Ask AI Option for Short Queries */}
           {showAskAI && (
-            <List.Section title={t.askAISectionTitle}>
+            <List.Section title={strings.askAISectionTitle}>
               <AskAIListItem onTriggerAI={() => setForceAI(true)} />
             </List.Section>
           )}
@@ -63,8 +62,8 @@ export default function SearchAppCommand() {
           {/* Suggestions Section */}
           {results.suggestions.length > 0 && (
             <List.Section
-              title={t.suggestionsSectionTitle(results.suggestions.length)}
-              subtitle={t.suggestionsSectionSubtitle}
+              title={strings.suggestionsSectionTitle(results.suggestions.length)}
+              subtitle={strings.suggestionsSectionSubtitle}
             >
               {results.suggestions.map((suggestion, index) => (
                 <SuggestionListItem key={`${suggestion.name}-${index}`} suggestion={suggestion} index={index} />

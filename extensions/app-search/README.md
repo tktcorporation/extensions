@@ -9,9 +9,8 @@ Find and launch installed applications using AI-powered natural language search.
 
 ## Features
 
-- 🤖 **AI-Powered Search** - Type naturally in any language: "mail app", "browser", "画像編集"
+- 🤖 **AI-Powered Search** - Type naturally: "mail app", "browser", "app for editing photos"
 - 🔍 **Smart Fuzzy Matching** - Find apps with partial names or acronyms (e.g., "vsc" → Visual Studio Code)
-- 🌐 **Multilingual** - Full support for English and Japanese (more languages coming soon)
 - ⚡ **Instant Launch** - Press Enter to open apps immediately
 - 💡 **Smart Suggestions** - Get recommendations based on your search intent
 
@@ -22,7 +21,6 @@ Find and launch installed applications using AI-powered natural language search.
    - App name: `chrome`, `vscode`, `slack`
    - Purpose: `email app`, `code editor`, `browser`
    - Natural language: `app for editing photos`
-   - Any language: `メール`, `ブラウザ`, `画像編集`
 3. Press **Enter** to launch the app
 
 ### Pro Tips
@@ -38,16 +36,8 @@ Find and launch installed applications using AI-powered natural language search.
 "vsc"            → Visual Studio Code
 "browser"        → Chrome, Safari, Firefox
 "recording"      → QuickTime Player, Screen Studio
-"画像編集"        → Photoshop, Preview, Pixelmator
-"メール書くアプリ" → Mail, Thunderbird
+"photo editor"   → Photoshop, Preview, Pixelmator
 ```
-
-## Configuration
-
-Change the UI language in Raycast preferences:
-1. Open Raycast preferences (`⌘,`)
-2. Go to Extensions → App Search
-3. Select your language (English or Japanese)
 
 ## Development
 
@@ -57,8 +47,6 @@ npm run dev    # Development mode
 npm test       # Run tests
 npm run lint   # Check code quality
 ```
-
-For adding new languages, see [i18n Guide](docs/i18n.md).
 
 ## License
 

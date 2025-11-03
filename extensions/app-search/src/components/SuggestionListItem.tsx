@@ -4,7 +4,7 @@
 
 import { List, ActionPanel, Action, Icon } from "@raycast/api";
 import { AppSuggestion } from "../types";
-import { useTranslations } from "../lib/i18n";
+import { strings } from "../lib/strings";
 
 interface SuggestionListItemProps {
   suggestion: AppSuggestion;
@@ -12,8 +12,6 @@ interface SuggestionListItemProps {
 }
 
 export function SuggestionListItem({ suggestion, index }: SuggestionListItemProps) {
-  const t = useTranslations();
-
   return (
     <List.Item
       key={`${suggestion.name}-${index}`}
@@ -23,17 +21,17 @@ export function SuggestionListItem({ suggestion, index }: SuggestionListItemProp
       icon={Icon.Download}
       actions={
         <ActionPanel>
-          <Action.OpenInBrowser title={t.searchOnWeb} url={suggestion.searchUrl} icon={Icon.MagnifyingGlass} />
+          <Action.OpenInBrowser title={strings.searchOnWeb} url={suggestion.searchUrl} icon={Icon.MagnifyingGlass} />
           {suggestion.officialUrl && (
             <Action.OpenInBrowser
-              title={t.visitOfficialWebsite}
+              title={strings.visitOfficialWebsite}
               url={suggestion.officialUrl}
               icon={Icon.Globe}
               shortcut={{ modifiers: ["cmd"], key: "o" }}
             />
           )}
           <Action.CopyToClipboard
-            title={t.copyAppName}
+            title={strings.copyAppName}
             content={suggestion.name}
             shortcut={{ modifiers: ["cmd"], key: "c" }}
           />

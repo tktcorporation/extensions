@@ -3,24 +3,22 @@
  */
 
 import { List, ActionPanel, Action, Icon } from "@raycast/api";
-import { useTranslations } from "../lib/i18n";
+import { strings } from "../lib/strings";
 
 interface AskAIListItemProps {
   onTriggerAI: () => void;
 }
 
 export function AskAIListItem({ onTriggerAI }: AskAIListItemProps) {
-  const t = useTranslations();
-
   return (
     <List.Item
-      title={t.askAITitle}
-      subtitle={t.askAISubtitle}
+      title={strings.askAITitle}
+      subtitle={strings.askAISubtitle}
       icon={Icon.Stars}
-      accessories={[{ text: t.askAIAccessory, tooltip: t.searchWithAI }]}
+      accessories={[{ text: strings.askAIAccessory, tooltip: strings.searchWithAI }]}
       actions={
         <ActionPanel>
-          <Action title={t.searchWithAI} icon={Icon.Stars} onAction={onTriggerAI} />
+          <Action title={strings.searchWithAI} icon={Icon.Stars} onAction={onTriggerAI} />
         </ActionPanel>
       }
     />

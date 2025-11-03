@@ -14,26 +14,6 @@
     "macOS",
     "Windows"
   ],
-  "preferences": [
-    {
-      "name": "language",
-      "type": "dropdown",
-      "required": false,
-      "title": "Language",
-      "description": "Select your preferred language for the extension",
-      "default": "en",
-      "data": [
-        {
-          "title": "English",
-          "value": "en"
-        },
-        {
-          "title": "日本語 (Japanese)",
-          "value": "ja"
-        }
-      ]
-    }
-  ],
   "commands": [
     {
       "name": "index",
@@ -61,20 +41,6 @@
     "instructions": "Help users find applications on their system. ALWAYS search installed applications first. Match based on app name, purpose, or category. Only suggest uninstalled apps if few matches found or explicitly requested. Indicate which apps are installed vs suggestions.",
     "evals": [
       {
-        "input": "@search-app メール書くアプリ",
-        "expected": [
-          {
-            "callsTool": "search-installed-apps"
-          },
-          {
-            "meetsCriteria": "Returns email applications"
-          },
-          {
-            "includes": "Mail"
-          }
-        ]
-      },
-      {
         "input": "@search-app browser",
         "expected": [
           {
@@ -82,17 +48,6 @@
           },
           {
             "meetsCriteria": "Returns browser applications like Chrome or Safari"
-          }
-        ]
-      },
-      {
-        "input": "@search-app 画像編集",
-        "expected": [
-          {
-            "callsTool": "search-installed-apps"
-          },
-          {
-            "meetsCriteria": "Returns image editing applications"
           }
         ]
       }

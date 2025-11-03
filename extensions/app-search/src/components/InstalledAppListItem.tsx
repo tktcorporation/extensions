@@ -4,37 +4,35 @@
 
 import { List, ActionPanel, Action } from "@raycast/api";
 import { AppSearchResult } from "../types";
-import { useTranslations } from "../lib/i18n";
+import { strings } from "../lib/strings";
 
 interface InstalledAppListItemProps {
   result: AppSearchResult;
 }
 
 export function InstalledAppListItem({ result }: InstalledAppListItemProps) {
-  const t = useTranslations();
-
   return (
     <List.Item
       key={result.app.bundleId || result.app.path}
       title={result.app.name}
       subtitle={result.matchReason}
       accessories={[
-        { text: `${result.matchScore}%`, tooltip: t.matchScoreTooltip },
-        ...(result.app.bundleId ? [{ text: result.app.bundleId, tooltip: t.bundleIdTooltip }] : []),
+        { text: `${result.matchScore}%`, tooltip: strings.matchScoreTooltip },
+        ...(result.app.bundleId ? [{ text: result.app.bundleId, tooltip: strings.bundleIdTooltip }] : []),
       ]}
       icon={{ fileIcon: result.app.path }}
       actions={
         <ActionPanel>
-          <Action.Open title={t.launchApplication} target={result.app.path} />
-          <Action.ShowInFinder title={t.showInFinder} path={result.app.path} />
+          <Action.Open title={strings.launchApplication} target={result.app.path} />
+          <Action.ShowInFinder title={strings.showInFinder} path={result.app.path} />
           <Action.CopyToClipboard
-            title={t.copyPath}
+            title={strings.copyPath}
             content={result.app.path}
             shortcut={{ modifiers: ["cmd"], key: "c" }}
           />
           {result.app.bundleId && (
             <Action.CopyToClipboard
-              title={t.copyBundleId}
+              title={strings.copyBundleId}
               content={result.app.bundleId}
               shortcut={{ modifiers: ["cmd", "shift"], key: "c" }}
             />

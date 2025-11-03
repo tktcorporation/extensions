@@ -1,10 +1,9 @@
 /**
- * English translations
+ * UI strings for the application
+ * Centralized string management for maintainability
  */
 
-import { I18nMessages } from "../types";
-
-export const en: I18nMessages = {
+export const strings = {
   // Search UI
   searchBarPlaceholder: "Search apps by name, purpose, or category...",
   emptyViewTitle: "No apps found",
@@ -48,4 +47,4 @@ export const en: I18nMessages = {
   // Error messages
   searchFailed: "Search failed",
   searchFailedMessage: "An error occurred while searching for applications",
-};
+} as const;
